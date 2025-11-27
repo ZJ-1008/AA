@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>产品追溯管理</title>
+</head>
+<body>
+  <h1>产品追溯管理</h1>
+
+  <p><a href="{{ url_for('admin_new_product') }}">新增产品追溯信息</a></p>
+
+  <table border="1" cellpadding="5">
+    <tr>
+      <th>ID</th>
+      <th>追溯码</th>
+      <th>产品名称</th>
+      <th>型号</th>
+      <th>生产批次</th>
+      <th>二维码</th>
+      <th>扫码链接</th>
+    </tr>
+    {% for p in products %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.trace_id }}</td>
+        <td>{{ p.product_name }}</td>
+        <td>{{ p.model }}</td>
+        <td>{{ p.prod_batch }}</td>
+        <td>
+          {% if p.qr_image_path %}
+            <img src="/{{ p.qr_image_path }}" alt="QR" width="80">
+          {% endif %}
+        </td>
+        <td>
+          <a href="{{ url_for('trace_page', trace_id=p.trace_id, _external=True) }}" target="_blank">
+            打开查询页面
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

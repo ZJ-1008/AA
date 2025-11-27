@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ product.product_name }} 追溯信息</title>
+</head>
+<body>
+  <h2>{{ product.product_name }}（{{ product.model }}）</h2>
+  <p>追溯码：{{ product.trace_id }}</p>
+
+  <h3>材料与产地</h3>
+  <p>材料：{{ product.material or '—' }}</p>
+  <p>材料产地：{{ product.material_origin or '—' }}</p>
+  <p>材料批次：{{ product.material_batch or '—' }}</p>
+
+  <h3>标准与认证</h3>
+  <p>执行标准：{{ product.standard_code or '—' }}</p>
+
+  <h3>功能与关键参数</h3>
+  <p>{{ product.function_desc or '—' }}</p>
+  {% if product.key_params %}
+    <pre>{{ product.key_params }}</pre>
+  {% endif %}
+
+  <h3>生产与质检信息</h3>
+  <p>生产批次：{{ product.prod_batch or '—' }}</p>
+  <p>生产日期：{{ product.prod_date or '—' }}</p>
+  <p>产线/工厂：{{ product.prod_line or '—' }}</p>
+  <p>质检结果：{{ product.qc_result or '—' }}</p>
+  <p>检验员：{{ product.qc_person or '—' }}</p>
+
+  <h3>质保与售后</h3>
+  <p>质保期：{{ product.warranty_months or 0 }} 个月</p>
+  <p>售后电话：请联系贵公司售后电话</p>
+</body>
+</html>

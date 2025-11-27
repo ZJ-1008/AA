@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>新增产品追溯信息</title>
+</head>
+<body>
+  <h1>新增产品追溯信息</h1>
+
+  <form method="post">
+    <p>产品名称：<input type="text" name="product_name" required></p>
+    <p>型号：<input type="text" name="model"></p>
+    <p>材料：<input type="text" name="material"></p>
+    <p>材料产地：<input type="text" name="material_origin"></p>
+    <p>材料批次：<input type="text" name="material_batch"></p>
+    <p>执行标准：<input type="text" name="standard_code"></p>
+    <p>功能描述：<br>
+      <textarea name="function_desc" rows="4" cols="50"></textarea>
+    </p>
+    <p>关键参数：<br>
+      <textarea name="key_params" rows="4" cols="50"></textarea>
+    </p>
+    <p>生产批次：<input type="text" name="prod_batch"></p>
+    <p>生产日期：<input type="text" name="prod_date" placeholder="例如 2025-11-26"></p>
+    <p>产线/工厂：<input type="text" name="prod_line"></p>
+    <p>质检结果：<input type="text" name="qc_result" value="合格"></p>
+    <p>检验员：<input type="text" name="qc_person"></p>
+    <p>质保（月）：<input type="number" name="warranty_months" value="12"></p>
+
+    <p>
+      <button type="submit">保存并生成二维码</button>
+      <a href="{{ url_for('admin_products') }}">返回列表</a>
+    </p>
+  </form>
+</body>
+</html>
