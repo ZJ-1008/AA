@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Traceability</title>
+</head>
+<body>
+    <h1 id="product-name"></h1>
+    <p id="trace-id"></p>
+    <h2>材料与产地</h2>
+    <p id="material"></p>
+    <p id="material-origin"></p>
+    <h2>生产与质量信息</h2>
+    <p id="prod-batch"></p>
+    <p id="prod-date"></p>
+    <p id="prod-line"></p>
+    <p id="qc-result"></p>
+    <p id="qc-person"></p>
+    <h2>质量与售后</h2>
+    <p id="warranty"></p>
+    
+    <script>
+        fetch('product_data.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('product-name').innerText = `${data.product_name} (${data.model})`;
+                document.getElementById('trace-id').innerText = `追溯码：${data.trace_id}`;
+                document.getElementById('material').innerText = `材料：${data.material}`;
+                document.getElementById('material-origin').innerText = `材料产地：${data.material_origin}`;
+                document.getElementById('prod-batch').innerText = `生产批次：${data.prod_batch}`;
+                document.getElementById('prod-date').innerText = `生产日期：${data.prod_date}`;
+                document.getElementById('prod-line').innerText = `生产线：${data.prod_line}`;
+                document.getElementById('qc-result').innerText = `质检结果：${data.qc_result}`;
+                document.getElementById('qc-person').innerText = `质检员：${data.qc_person}`;
+                document.getElementById('warranty').innerText = `质保期：${data.warranty_months}个月`;
+            })
+            .catch(error => console.error('Error loading the product data:', error));
+    </script>
+</body>
+</html>
