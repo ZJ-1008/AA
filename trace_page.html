@@ -1,37 +1,44 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ product.product_name }} 追溯信息</title>
+  <meta charset="UTF-8" />
+  <title>产品追溯信息</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
-  <h2>{{ product.product_name }}（{{ product.model }}）</h2>
-  <p>追溯码：{{ product.trace_id }}</p>
+  <h2>产品信息</h2>
+  <div id="product-info">
+    <!-- 产品信息将通过 JS 加载 -->
+  </div>
 
-  <h3>材料与产地</h3>
-  <p>材料：{{ product.material or '—' }}</p>
-  <p>材料产地：{{ product.material_origin or '—' }}</p>
-  <p>材料批次：{{ product.material_batch or '—' }}</p>
+  <script>
+    // 从 URL 读取 trace_id
+    const params = new URLSearchParams(window.location.search);
+    const traceId = params.get("trace_id");
 
-  <h3>标准与认证</h3>
-  <p>执行标准：{{ product.standard_code or '—' }}</p>
-
-  <h3>功能与关键参数</h3>
-  <p>{{ product.function_desc or '—' }}</p>
-  {% if product.key_params %}
-    <pre>{{ product.key_params }}</pre>
-  {% endif %}
-
-  <h3>生产与质检信息</h3>
-  <p>生产批次：{{ product.prod_batch or '—' }}</p>
-  <p>生产日期：{{ product.prod_date or '—' }}</p>
-  <p>产线/工厂：{{ product.prod_line or '—' }}</p>
-  <p>质检结果：{{ product.qc_result or '—' }}</p>
-  <p>检验员：{{ product.qc_person or '—' }}</p>
-
-  <h3>质保与售后</h3>
-  <p>质保期：{{ product.warranty_months or 0 }} 个月</p>
-  <p>售后电话：请联系贵公司售后电话</p>
+    // 获取 JSON 数据并展示
+    fetch('https://zj-1008.github.io/AA/static/products.json')
+      .then(response => response.json())
+      .then(data => {
+        // 找到与 trace_id 匹配的产品数据
+        const product = data.find(p => p.trace_id === traceId);
+        if (product) {
+          document.getElementById("product-info").innerHTML = `
+            <h3>${product.product_name} (${product.model})</h3>
+            <p>追溯码：${product.trace_id}</p>
+            <p>材料：${product.material}</p>
+            <p>材料产地：${product.material_origin}</p>
+            <p>功能描述：${product.function_desc}</p>
+            <p>质保期：${product.warranty_months}个月</p>
+          `;
+        } else {
+          document.getElementById("product-info").innerHTML = `<p>未找到产品信息。</p>`;
+        }
+      })
+      .catch(error => {
+        console.error("加载数据失败", error);
+        document.getElementById("product-info").innerHTML = "<p>数据加载失败。</p>";
+      });
+  </script>
 </body>
 </html>
